@@ -1,0 +1,8 @@
+ec2/.terraform*
+ec2/terraform*
+
+s3/.terraform*
+s3/terraform*
+
+r53/.terraform*
+r53/terraform*

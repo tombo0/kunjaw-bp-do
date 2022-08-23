@@ -1,0 +1,6 @@
+---
+- name: Install Jenkins with Ansible
+  hosts: jenkins
+  become: yes
+  roles:
+  - jenkins

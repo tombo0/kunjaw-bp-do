@@ -1,0 +1,31 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: staging
+  labels:
+    name: staging
+    env: staging
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: production
+  labels:
+    name: production
+    env: production
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: monitoring
+  labels:
+    name: monitoring
+    env: production
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: logging
+  labels:
+    name: logging
+    env: production

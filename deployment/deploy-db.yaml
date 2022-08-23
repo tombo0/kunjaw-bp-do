@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cilist-db
+  labels:
+    app: cilist-db
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cilist-db
+  template:
+    metadata:
+      labels:
+        app: cilist-db
+    spec:
+      containers:
+      - name: database
+        image: profesorgreen36/cilist_database:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+spec:
+  type: ClusterIP
+  selector:
+    app: cilist-db
+  ports:
+  - port: 3306

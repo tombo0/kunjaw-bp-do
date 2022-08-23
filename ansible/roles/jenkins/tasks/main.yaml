@@ -1,0 +1,33 @@
+---
+- name: Update Repository
+  apt: update_cache=true
+  become: yes
+
+- name: Install Java
+  apt: name=openjdk-11-jdk state=present update_cache=true
+
+- name: Add Jenkins gpg key
+  ansible.builtin.get_url:
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+    dest: /usr/share/keyrings/jenkins-keyring.asc
+
+- name: Add Jenkins repo
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/"
+    state: present
+
+- name: Update Repository
+  apt: update_cache=true
+  become: yes
+
+- name: Install Jenkins
+  apt: 
+    name: jenkins
+  notify:
+    - start jenkins
+
+- name: Show initial password
+  command: cat /var/lib/jenkins/secrets/initialAdminPassword
+  register: password
+
+- debug: msg="{{ password.stdout }}"
