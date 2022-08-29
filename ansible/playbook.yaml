@@ -1,0 +1,18 @@
+---
+- name: Install Jenkins with Ansible
+  hosts: jenkins
+  become: yes
+  roles:
+  - jenkins
+
+- name: Install Docker with Ansible
+  hosts: jenkins
+  become: yes
+  roles:
+  - docker
+
+- name: Install Kubectl with Ansible
+  hosts: jenkins
+  become: yes
+  roles:
+  - k8s

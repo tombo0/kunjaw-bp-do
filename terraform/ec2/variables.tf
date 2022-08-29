@@ -17,7 +17,3 @@ variable "vpc_security_group_ids" {
 variable "associate_public_ip_address" {
   default = true
 }
-
-variable "instance_count" {
-  default = 1
-}
