@@ -1,3 +1,7 @@
+variable "vpc" {
+  default = "vpc-6c71a007"
+}
+
 variable "ami" {
   default = "ami-02f3416038bdb17fb"
 }

@@ -28,7 +28,8 @@
 
 - name: Add Docker repo
   apt_repository: 
-    repo: deb [arch={{ arch.stdout }} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ release.stdout }} stable
+    # repo: deb [arch={{ arch.stdout }} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ release.stdout }} stable
+    repo: deb [signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu stable
     state: present
 
 - name: Update Repository

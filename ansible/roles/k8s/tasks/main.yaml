@@ -9,3 +9,8 @@
 - name: Install kubectl
   command: sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
   become: yes
+
+- name: Initialize Cluster with kOps
+  shell: setup.sh
+  args:
+    chdir: ../../../../kops/

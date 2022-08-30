@@ -16,7 +16,7 @@ const AddUser = () => {
   const saveUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://backend/users", {
+      await axios.post(process.env.REACT_APP_BACKEND_URL + "/users", {
         name,
         email,
         gender,
