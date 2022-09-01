@@ -6,3 +6,7 @@ s3/terraform*
 
 r53/.terraform*
 r53/terraform*
+
+rds/.terraform*
+rds/terraform*
+rds/secret.tfvars
