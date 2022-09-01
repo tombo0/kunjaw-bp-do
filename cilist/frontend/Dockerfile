@@ -6,6 +6,8 @@ WORKDIR /app
 
 COPY . /app
 
+RUN apt update && apt install nano -y
+
 RUN npm install
 
 EXPOSE 3000

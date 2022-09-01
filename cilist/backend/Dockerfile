@@ -1,14 +1,14 @@
 FROM node:lts-gallium
 
-ENV NODE_ENV=development
-
 WORKDIR /app
 
 COPY . /app
 
-RUN npm install
+COPY .env.example /app/.env
 
-RUN chmod +x wait-for-it.sh
+RUN apt update && apt install nano -y
+
+RUN npm install
 
 EXPOSE 5000
 
