@@ -4,8 +4,6 @@ WORKDIR /app
 
 COPY . /app
 
-COPY .env.example /app/.env
-
 RUN apt update && apt install nano -y
 
 RUN npm install

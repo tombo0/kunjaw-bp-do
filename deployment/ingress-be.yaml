@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: ingress-be
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /users
+    nginx.ingress.kubernetes.io/rewrite-target: /users/$2
 spec:
   ingressClassName: nginx
   rules:
     - host: backend
       http:
         paths:
-          - path: /users
+          - path: /users(/|$)(.*)
             pathType: Prefix
             backend:
               service:

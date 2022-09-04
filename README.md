@@ -83,10 +83,16 @@ kubectl apply -f namespace.yaml
 kubectl apply -f deploy-db.yaml --namespace staging
 ```
 ```
+kubectl apply -f configmap-be.yaml --namespace staging
+```
+```
 kubectl apply -f deploy-be.yaml --namespace staging
 ```
 ```
 kubectl apply -f ingress-be.yaml --namespace staging
+```
+```
+kubectl apply -f configmap-fe.yaml --namespace staging
 ```
 ```
 kubectl apply -f deploy-fe.yaml --namespace staging

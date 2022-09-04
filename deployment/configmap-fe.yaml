@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: cilist-configmap-fe
+  name: configmap-cilist-fe
   labels:
     app: cilist-fe
 data:
   .env: |
     # APP
-    REACT_APP_BACKEND_URL=process.env.BACKEND_URL
+    REACT_APP_BACKEND_URL=http://backend/

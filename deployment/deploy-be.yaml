@@ -14,47 +14,20 @@ spec:
       labels:
         app: cilist-be
     spec:
-      # volumes:
-      # - name: volume-backend-env
-      #   secret:
-      #     secretName: cilist-secret-be
+      volumes:
+      - name: env-cilist-be
+        configMap:
+          name: configmap-cilist-be
       containers:
       - name: backend
         image: profesorgreen36/cilist_backend:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
-        # volumeMounts:
-        # - name: volume-backend-env
-        #   mountPath: "/app/.env"
-        #   subPath: ".env"
-        # env:
-        # - name: BASE_URL_PORT
-        #   value: "5000"
-        # - name: MYSQL_ROOT_PASSWORD
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: cilist-secret-be
-        #       key: MYSQL_ROOT_PASSWORD
-        # - name: DATABASE_USERNAME
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: cilist-secret-be
-        #       key: DATABASE_USERNAME
-        # - name: DATABASE_PASSWORD
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: cilist-secret-be
-        #       key: DATABASE_PASSWORD
-        # - name: DATABASE_DATABASE
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: cilist-secret-be
-        #       key: DATABASE_DATABASE
-        # - name: DATABASE_HOST
-        #   value: "172.17.0.2"
-        # - name: DATABASE_PORT
-        #   value: "3306"
+        volumeMounts:
+        - name: env-cilist-be
+          mountPath: "/app/.env"
+          subPath: ".env"
 ---
 apiVersion: v1
 kind: Service
