@@ -1,0 +1,83 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: staging
+  labels:
+    name: staging
+    env: staging
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-cilist-fe
+  labels:
+    app: cilist-fe
+data:
+  .env: |
+    # APP
+    REACT_APP_BACKEND_URL=http://backend.bpkurikulum.my.id/
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cilist-fe
+  labels:
+    app: cilist-fe
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cilist-fe
+  template:
+    metadata:
+      labels:
+        app: cilist-fe
+    spec:
+      volumes:
+      - name: env-cilist-fe
+        configMap:
+          name: configmap-cilist-fe
+      containers:
+      - name: frontend
+        image: profesorgreen36/cilist_frontend:staging
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: env-cilist-fe
+          mountPath: "/app/.env"
+          subPath: ".env"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: cilist-fe
+  ports:
+  - port: 3000
+    protocol: "TCP"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-fe
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: frontend.bpkurikulum.my.id
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 3000

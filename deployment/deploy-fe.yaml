@@ -35,9 +35,9 @@ kind: Service
 metadata:
   name: frontend
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: cilist-fe
   ports:
   - port: 3000
-    targetPort: 3000
+    protocol: "TCP"
