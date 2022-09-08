@@ -121,22 +121,7 @@ If backend can't run properly, check `logs`. And if it doesn't help, wait 2-3 mi
 
 ## Testing
 
-Check frontend nodeport port
-
-```
-kubectl get svc -n staging
-```
-
-The output similar to this
-
-```
-NAME       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-backend    ClusterIP   10.102.242.153   <none>        5000/TCP         8m5s
-database   ClusterIP   10.106.4.161     <none>        3306/TCP         8m26s
-frontend   NodePort    10.110.218.25    <none>        3000:30236/TCP   6m32s
-```
-
-Then go to browser and access minikubeIP:30236
+Simply go to http://frontend.bpkurikulum.my.id/
 
 If configuration is successful, you'll see 4 data like this. It means `frontend`, `backend`, and `database` successfully connected
 
