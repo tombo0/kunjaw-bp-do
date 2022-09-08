@@ -12,6 +12,6 @@ data:
 
     # Database
     DATABASE_USERNAME=people
-    DATABASE_PASSWORD=people
+    DATABASE_PASSWORD=s3k0l4hd3v0p5
     DATABASE_DATABASE=people
     DATABASE_HOST=database

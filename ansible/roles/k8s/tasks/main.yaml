@@ -3,14 +3,44 @@
   apt: update_cache=true
   become: yes
 
-- name: Download kubectl
-  command: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-
 - name: Install kubectl
-  command: sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-  become: yes
+  block:
+    - name: Add Kubectl gpg key
+      get_url:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
 
-- name: Initialize Cluster with kOps
-  shell: setup.sh
-  args:
-    chdir: ../../../../kops/
+    - name: Add Kubectl repo
+      apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main"
+        state: present
+
+    - name: Update Repository
+      apt: update_cache=true
+      become: yes
+
+    - name: Install kubectl
+      apt:
+        name: kubectl
+
+- name: Install Helm
+  block:
+    - name: Get helm script 
+      get_url:
+        src: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+        dest: get-helm.sh
+      
+    - name: Install helm script
+      command: sh ./get-helm.sh
+
+- name: Copy kubernetes config
+  file:
+    path: /var/lib/jenkins/.kube
+    owner: jenkins
+    group: jenkins
+  copy:
+    src: /home/taufik/.kube/config
+    dest: /var/lib/jenkins/.kube/config
+    owner: jenkins
+    group: jenkins
+    mode: '0600'

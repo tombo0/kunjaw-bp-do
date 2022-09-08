@@ -20,7 +20,7 @@ spec:
           name: configmap-cilist-fe
       containers:
       - name: frontend
-        image: profesorgreen36/cilist_frontend:latest
+        image: profesorgreen36/cilist_frontend-local-dev:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000

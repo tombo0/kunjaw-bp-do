@@ -85,7 +85,8 @@ Then add backend host in /etc/hosts with your minikube IP
 ```
 ...
 127.0.0.1       localhost
-<your-minikube-ip>    backend
+<your-minikube-ip>    backend.bpkurikulum.my.id
+<your-minikube-ip>    frontend.bpkurikulum.my.id
 127.0.1.1       hewlettpackard
 ...
 ```
@@ -97,25 +98,22 @@ Then add backend host in /etc/hosts with your minikube IP
 cd deployment
 ```
 ```
-kubectl apply -f namespace.yaml
+kubectl apply -f deploy-db.yaml -n staging
 ```
 ```
-kubectl apply -f deploy-db.yaml --namespace staging
+kubectl apply -f configmap-be.yaml -n staging
 ```
 ```
-kubectl apply -f configmap-be.yaml --namespace staging
+kubectl apply -f deploy-be.yaml -n staging
 ```
 ```
-kubectl apply -f deploy-be.yaml --namespace staging
+kubectl apply -f ingress-be.yaml -n staging
 ```
 ```
-kubectl apply -f ingress-be.yaml --namespace staging
+kubectl apply -f configmap-fe.yaml -n staging
 ```
 ```
-kubectl apply -f configmap-fe.yaml --namespace staging
-```
-```
-kubectl apply -f deploy-fe.yaml --namespace staging
+kubectl apply -f deploy-fe.yaml -n staging
 ```
 
 If backend can't run properly, check `logs`. And if it doesn't help, wait 2-3 minute after database deployment, then you can deploy backend
@@ -239,13 +237,13 @@ We'll configure Nginx Ingress controller with `helm`.
 ```
 helm upgrade --install ingress-nginx ingress-nginx \
   --repo https://kubernetes.github.io/ingress-nginx \
-  --namespace ingress-nginx --create-namespace
+  -n ingress-nginx --create-namespace
 ```
 
 The ingress controller with create ELB. This will be out endpoint for both `backend` and `frontend` service.
 
 ```
-kubectl get service ingress-nginx-controller --namespace=ingress-nginx
+kubectl get service ingress-nginx-controller -n=ingress-nginx
 ```
 ```
 NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP                                                               PORT(S)                      AGE
@@ -261,7 +259,7 @@ Server:		192.168.200.240
 Address:	192.168.200.240#53
 
 Non-authoritative answer:
-backend.bpkurikulum.my.id	canonical name = aede63f6bd48d4881aee1819d5aed665-1708236318.us-east-2.elb.amazonaws.com.
+backend-staging.bpkurikulum.my.id	canonical name = aede63f6bd48d4881aee1819d5aed665-1708236318.us-east-2.elb.amazonaws.com.
 Name:	aede63f6bd48d4881aee1819d5aed665-1708236318.us-east-2.elb.amazonaws.com
 Address: 18.189.242.244
 Name:	aede63f6bd48d4881aee1819d5aed665-1708236318.us-east-2.elb.amazonaws.com
@@ -274,7 +272,7 @@ Server:		192.168.200.240
 Address:	192.168.200.240#53
 
 Non-authoritative answer:
-frontend.bpkurikulum.my.id	canonical name = aede63f6bd48d4881aee1819d5aed665-1708236318.us-east-2.elb.amazonaws.com.
+frontend-staging.bpkurikulum.my.id	canonical name = aede63f6bd48d4881aee1819d5aed665-1708236318.us-east-2.elb.amazonaws.com.
 Name:	aede63f6bd48d4881aee1819d5aed665-1708236318.us-east-2.elb.amazonaws.com
 Address: 18.216.199.135
 Name:	aede63f6bd48d4881aee1819d5aed665-1708236318.us-east-2.elb.amazonaws.com

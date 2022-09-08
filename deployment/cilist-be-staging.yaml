@@ -69,7 +69,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: backend.bpkurikulum.my.id
+    - host: backend-staging.bpkurikulum.my.id
       http:
         paths:
           - path: /users(/|$)(.*)

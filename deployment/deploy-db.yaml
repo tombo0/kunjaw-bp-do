@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: database
-        image: profesorgreen36/cilist_database:latest
+        image: profesorgreen36/cilist_database-local-dev:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3306

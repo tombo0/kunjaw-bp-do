@@ -20,7 +20,7 @@ spec:
           name: configmap-cilist-be
       containers:
       - name: backend
-        image: profesorgreen36/cilist_backend:latest
+        image: profesorgreen36/cilist_backend-local-dev:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
