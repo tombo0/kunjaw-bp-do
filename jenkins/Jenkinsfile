@@ -1,16 +1,20 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            cloud 'kubernetes'
+        }
+    }
+ 
 
     stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-
-        stage('ls') {
-            steps {
-                sh 'ls'
+        stage('version') {
+            node('node') {
+                steps {
+                    sh 'node -v'
+                }
+                steps {
+                    sh 'ls'
+                }
             }
         }
     }
