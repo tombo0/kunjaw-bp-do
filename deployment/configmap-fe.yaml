@@ -7,4 +7,4 @@ metadata:
 data:
   .env: |
     # APP
-    REACT_APP_BACKEND_URL=http://backend-staging.bpkurikulum.my.id/
+    REACT_APP_BACKEND_URL=http://backend.bpkurikulum.my.id/
