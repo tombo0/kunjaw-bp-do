@@ -8,7 +8,7 @@ metadata:
 data:
   .env: |
     # APP
-    REACT_APP_BACKEND_URL=http://backend-staging.bpkurikulum.my.id/
+    REACT_APP_BACKEND_URL=http://backend-production.bpkurikulum.my.id/
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -32,7 +32,7 @@ spec:
           name: configmap-cilist-fe
       containers:
       - name: frontend
-        image: profesorgreen36/cilist_frontend:staging
+        image: profesorgreen36/cilist_frontend:production
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
@@ -63,7 +63,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: frontend-staging.bpkurikulum.my.id
+    - host: frontend-production.bpkurikulum.my.id
       http:
         paths:
           - path: /(.*)

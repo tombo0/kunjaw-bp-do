@@ -98,25 +98,28 @@ Then add backend host in /etc/hosts with your minikube IP
 cd deployment
 ```
 ```
-kubectl apply -f deploy-db.yaml -n staging
+kubectl apply -f deploy-db.yaml
 ```
 ```
-kubectl apply -f configmap-be.yaml -n staging
+kubectl apply -f configmap-be.yaml
 ```
 ```
-kubectl apply -f deploy-be.yaml -n staging
+kubectl apply -f deploy-be.yaml
 ```
 ```
-kubectl apply -f ingress-be.yaml -n staging
+kubectl apply -f ingress-be.yaml
 ```
 ```
-kubectl apply -f configmap-fe.yaml -n staging
+kubectl apply -f configmap-fe.yaml
 ```
 ```
-kubectl apply -f deploy-fe.yaml -n staging
+kubectl apply -f deploy-fe.yaml
+```
+```
+kubectl apply -f ingress-fe.yaml
 ```
 
-If backend can't run properly, check `logs`. And if it doesn't help, wait 2-3 minute after database deployment, then you can deploy backend
+If backend can't run properly, check `logs`. And if it doesn't help, wait 2-3 minute after database deployment, then you can redeploy backend
 
 
 ## Testing
@@ -225,7 +228,7 @@ helm upgrade --install ingress-nginx ingress-nginx \
   -n ingress-nginx --create-namespace
 ```
 
-The ingress controller with create ELB. This will be out endpoint for both `backend` and `frontend` service.
+The ingress controller with create ELB. This will be out endpoint for both `backend` and `frontend` services.
 
 ```
 kubectl get service ingress-nginx-controller -n=ingress-nginx
@@ -235,10 +238,10 @@ NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP          
 ingress-nginx-controller   LoadBalancer   100.70.119.170   aede63f6bd48d4881aee1819d5aed665-1708236318.us-east-2.elb.amazonaws.com   80:32347/TCP,443:32405/TCP   115m
 ```
 
-Configure CNAME for backend and frontend subdomain and assign the external-ip to those two sub domain.
+Configure CNAME for backend and frontend subdomain and assign the external-ip to those two sub domains.
 
 ```
-nslookup backend.bpkurikulum.my.id
+nslookup backend-staging.bpkurikulum.my.id
 
 Server:		192.168.200.240
 Address:	192.168.200.240#53
@@ -251,7 +254,7 @@ Name:	aede63f6bd48d4881aee1819d5aed665-1708236318.us-east-2.elb.amazonaws.com
 Address: 18.216.199.135
 ```
 ```
-nslookup frontend.bpkurikulum.my.id
+nslookup frontend-staging.bpkurikulum.my.id
 
 Server:		192.168.200.240
 Address:	192.168.200.240#53
@@ -288,14 +291,14 @@ data:
 ...
 ```
 
-For frontend, you have to add backend subdomain. Change variable to proper backend subdomain.
+For frontend configmap, you have to add backend subdomain. Change variable to proper backend subdomain.
 
 ```
 ...
 data:
   .env: |
     # APP
-    REACT_APP_BACKEND_URL=http://backend.bpkurikulum.my.id/
+    REACT_APP_BACKEND_URL=http://backend-staging.bpkurikulum.my.id/
 ...
 ```
 
