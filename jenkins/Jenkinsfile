@@ -8,14 +8,12 @@ pipeline {
 
     stages {
         stage('version') {
-            node('node') {
-                steps {
+            steps {
+                node('node') {
                     sh 'node -v'
-                }
-                steps {
                     sh 'ls'
                 }
-            }
+            }            
         }
     }
 }
